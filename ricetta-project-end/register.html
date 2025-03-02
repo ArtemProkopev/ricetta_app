@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация</title>
+  <link rel="icon" href="..\images\robot2 1.svg" type="image/x-icon">
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
+
+  <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="images/robot.png" alt="Изображение робота" class="robot-img">
+      <div class="header-text">
+        <div class="auth-options">
+          <div class="option" id="login"><a href="login.html" class="login-link">Вход</a></div>
+          <div class="option" id="register">Регистрация</div>
+        </div>
+        <div class="indicator" id="indicator"></div>
+      </div>
+    </div>
+
+    <form id="register-form" class="form">
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Имя пользователя" required>
+      </div>
+
+      <div class="input-group">
+        <input type="email" id="email" placeholder="E-mail" required>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Пароль" required>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="confirm-password" placeholder="Подтвердите пароль" required>
+      </div>
+
+      <button type="submit" class="submit-btn">Зарегистрироваться</button>
+
+      <div id="loading-indicator" class="loading-indicator" style="display:none;">
+        <!-- <div class="loader"></div> -->
+        <span>Загрузка...</span>
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCs4j6eNBCRgw3vJlEwipW7eUpJU28Pti0",
+      authDomain: "ricetta-project.firebaseapp.com",
+      projectId: "ricetta-project",
+      storageBucket: "ricetta-project.appspot.com",
+      messagingSenderId: "853695323285",
+      appId: "1:853695323285:web:50926003dbd2324da7cf9c",
+      measurementId: "G-K0FK8TL3EB"
+    }
+
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app)
+
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault()
+
+      const email = document.getElementById('email').value.trim()
+      const password = document.getElementById('password').value.trim()
+      const confirmPassword = document.getElementById('confirm-password').value.trim()
+      const loadingIndicator = document.getElementById('loading-indicator')
+
+      if (password !== confirmPassword) {
+        alert('Пароли не совпадают!')
+        return
+      }
+
+      loadingIndicator.style.display = 'block'
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+        alert('Регистрация успешна!')
+        console.log('Пользователь:', userCredential.user)
+      } catch (error) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            alert('Этот email уже зарегистрирован.')
+            break
+          case 'auth/invalid-email':
+            alert('Некорректный формат email.')
+            break
+          case 'auth/weak-password':
+            alert('Пароль должен содержать не менее 6 символов.')
+            break
+          default:
+            alert(`Ошибка: ${error.message}`)
+        }
+        console.error('Ошибка регистрации:', error)
+      } finally {
+        loadingIndicator.style.display = 'none'
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>

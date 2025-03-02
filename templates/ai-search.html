@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ricetta - Кулинарный помощник</title>
+    <link rel="icon" href="/static/images/robot2 1.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .loader-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f8774a;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            color: #dc3545;
+            padding: 15px;
+            border: 1px solid #dc3545;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .ai-recipe-output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="forLogoHeader">
+            <img src="/static/images/robotbfona 1.svg" alt="Логотип" class="logo-img" />
+            <a href="main.html" class="logoText"><span>Ricetta</span></a>
+        </div>
+        <div class="header-center">
+            <div class="search-ai-container">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Поиск рецептов..." />
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <a href="templates/ai-search.html" class="ai-search-btn">
+                    <i class="fas fa-robot"></i>
+                    С помощью ИИ
+                </a>
+            </div>
+        </div>
+        <button class="registration">
+            <a href="ricetta-project-end/register.html">Войти</a>
+            <i class="fas fa-user-circle"></i>
+        </button>
+    </header>
+
+    <main class="ai-main">
+        <section class="ai-hero">
+            <section class="ai-hero-content">
+                <h1>ИИ-шеф на вашей кухне</h1>
+                <p>
+                    Опишите ваши ингредиенты, предпочтения или идеи, и наш искусственный
+                    интеллект создаст уникальный рецепт!
+                </p>
+                <section class="ai-form-container">
+                    <div class="ai-input-box">
+                        <textarea id="ai-query"
+                            placeholder="Пример: Придумай вегетарианское блюдо из баклажанов и нута..."
+                            rows="4"></textarea>
+                        <button class="ai-submit-btn" onclick="getRecipe()">
+                            <i class="fas fa-magic"></i>
+                            Создать рецепт
+                        </button>
+                    </div>
+                    <div class="ai-examples">
+                        <p>Попробуйте примеры:</p>
+                        <div class="example-buttons">
+                            <button class="example-btn" onclick="setExample('Постный десерт без сахара')">
+                                Постный десерт без сахара
+                            </button>
+                            <button class="example-btn" onclick="setExample('Быстрый ужин из курицы')">
+                                Быстрый ужин из курицы
+                            </button>
+                            <button class="example-btn" onclick="setExample('Детский праздничный стол')">
+                                Детский праздничный стол
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ai-recipe-output" id="recipe-output"></div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <div class="backFooter">
+            <div class="footer-contact">
+                <h4>Контакты</h4>
+                <p>
+                    Email: <a href="mailto:support@example.com">support@example.com</a>
+                </p>
+                <p>Телефон: +1 (234) 567-890</p>
+                <div class="social-media">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Pinterest</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Ricetta. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для установки примера в текстовое поле
+        function setExample(exampleText) {
+            document.getElementById('ai-query').value = exampleText
+        }
+
+        // Функция для отправки запроса на сервер
+        async function getRecipe() {
+            const query = document.getElementById('ai-query').value.trim()
+            const recipeOutput = document.getElementById('recipe-output')
+
+            // Очищаем предыдущий вывод
+            recipeOutput.innerHTML = ''
+
+            // Показываем индикатор загрузки
+            recipeOutput.innerHTML = '<div class="loader-spinner"></div>'
+
+            try {
+                // Отправляем запрос на сервер
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: query }),
+                })
+
+                if (!response.ok) {
+                    throw new Error('Ошибка при запросе к серверу')
+                }
+
+                const data = await response.json()
+
+                // Отображаем ответ
+                recipeOutput.innerHTML = `<p>${data.response}</p>`
+            } catch (error) {
+                // Отображаем сообщение об ошибке
+                recipeOutput.innerHTML = `<div class="error-message">Ошибка: ${error.message}</div>`
+            }
+        }
+    </script>
+</body>
+
+</html>

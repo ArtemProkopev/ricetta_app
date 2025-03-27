@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
-GEMINI_API_KEY = "AIzaSyBx19-uNqyD5WaZB0mWJ7agoigG0hTGMtQ"
+GEMINI_API_KEY = "AIzaSyBx19-uNQyD5WaZB0mWJ7agoigG0hTGMtQ"
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
 
 def get_gemini_response(prompt):
@@ -24,6 +24,31 @@ def get_gemini_response(prompt):
         except (KeyError, IndexError):
             return None
     return None
+
+# Health Check Endpoint (для Render.com)
+@app.route('/health')
+def health_check():
+    """Эндпоинт для проверки работоспособности сервиса"""
+    try:
+        # Простая проверка подключения к Gemini API
+        test_prompt = "Test connection"
+        test_response = get_gemini_response(test_prompt)
+        
+        if test_response is None:
+            raise ConnectionError("Gemini API недоступен")
+            
+        return jsonify({
+            "status": "healthy",
+            "services": {
+                "gemini_api": "available" if test_response else "unavailable"
+            }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            "status": "unhealthy",
+            "error": str(e)
+        }), 500
 
 @app.route('/')
 def home():

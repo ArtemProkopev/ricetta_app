@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/register/auth.css" />
+		<link rel="icon" href="/register/images/robot2_1.svg" type="image/x-icon" />
+		<title>Вход</title>
+		<script
+			type="module"
+			src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
+		></script>
+		<script
+			type="module"
+			src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"
+		></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<img
+					src="/register/images/robot.png"
+					alt="Изображение робота"
+					class="robot-img"
+				/>
+				<div class="header-text">
+					<div class="auth-options">
+						<div class="option active" id="login">Вход</div>
+						<div class="option" id="register">
+							<a href="/register" class="register-link">Регистрация</a>
+						</div>
+						<div class="indicator" id="indicator"></div>
+					</div>
+				</div>
+			</div>
+
+			<form id="login-form" class="form">
+				<div class="input-group">
+					<input type="email" id="email" placeholder="E-mail" required />
+				</div>
+				<div class="input-group">
+					<input type="password" id="password" placeholder="Пароль" required />
+				</div>
+				<div class="forgot-password">
+					<a href="/password-recovery" class="forgot-password-link"
+						>Забыл пароль?</a
+					>
+				</div>
+				<button type="submit" class="submit-btn">Войти</button>
+				<div
+					id="loading-indicator"
+					class="loading-indicator"
+					style="display: none"
+				>
+					<div class="loader"></div>
+					<span>Загрузка...</span>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			// Анимация индикатора
+			document.addEventListener('DOMContentLoaded', function () {
+				const login = document.getElementById('login')
+				const register = document.getElementById('register')
+				const indicator = document.getElementById('indicator')
+				const authOptions = document.querySelector('.auth-options')
+
+				function updateIndicator(element) {
+					const rect = element.getBoundingClientRect()
+					const parentRect = authOptions.getBoundingClientRect()
+
+					indicator.style.width = `${rect.width}px`
+					indicator.style.left = `${rect.left - parentRect.left}px`
+					indicator.style.opacity = '1'
+				}
+
+				function setActiveTab(element) {
+					;[login, register].forEach(tab => tab.classList.remove('active'))
+					element.classList.add('active')
+					updateIndicator(element)
+				}
+
+				// Инициализация
+				setActiveTab(login)
+
+				// Обработчики кликов
+				login.addEventListener('click', () => setActiveTab(login))
+				register.addEventListener('click', e => {
+					if (e.target.tagName !== 'A') {
+						setActiveTab(register)
+					}
+				})
+
+				// Обновление при ресайзе
+				window.addEventListener('resize', () => {
+					const activeTab = document.querySelector('.option.active')
+					if (activeTab) updateIndicator(activeTab)
+				})
+			})
+
+			// Firebase Auth
+			document
+				.getElementById('login-form')
+				.addEventListener('submit', async e => {
+					e.preventDefault()
+					const email = document.getElementById('email').value.trim()
+					const password = document.getElementById('password').value.trim()
+					const loadingIndicator = document.getElementById('loading-indicator')
+
+					loadingIndicator.style.display = 'flex'
+
+					try {
+						const { initializeApp } = await import(
+							'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js'
+						)
+						const { getAuth, signInWithEmailAndPassword } = await import(
+							'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js'
+						)
+
+						const firebaseConfig = {
+							apiKey: 'AIzaSyCs4j6eNBCRgw3vJlEwipW7eUpJU28Pti0',
+							authDomain: 'ricetta-project.firebaseapp.com',
+							projectId: 'ricetta-project',
+							storageBucket: 'ricetta-project.appspot.com',
+							messagingSenderId: '853695323285',
+							appId: '1:853695323285:web:50926003dbd2324da7cf9c',
+							measurementId: 'G-K0FK8TL3EB',
+						}
+
+						const app = initializeApp(firebaseConfig)
+						const auth = getAuth(app)
+						const userCredential = await signInWithEmailAndPassword(
+							auth,
+							email,
+							password
+						)
+
+						alert('Вход успешен!')
+						window.location.href = '/'
+					} catch (error) {
+						console.error('Ошибка входа:', error)
+						switch (error.code) {
+							case 'auth/wrong-password':
+								alert('Неверный пароль.')
+								break
+							case 'auth/user-not-found':
+								alert('Пользователь с таким email не найден.')
+								break
+							case 'auth/invalid-email':
+								alert('Некорректный формат email.')
+								break
+							default:
+								alert(`Ошибка: ${error.message}`)
+						}
+					} finally {
+						loadingIndicator.style.display = 'none'
+					}
+				})
+		</script>
+	</body>
+</html>

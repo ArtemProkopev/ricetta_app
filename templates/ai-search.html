@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Ricetta - Кулинарный помощник</title>
+		<link rel="icon" href="/static/images/robot2 1.svg" type="image/x-icon" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+		<style>
+			* {
+				box-sizing: border-box;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #f5f5f5;
+				color: #333;
+				line-height: 1.6;
+			}
+
+			header {
+				background-color: #fff;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+				padding: 15px 20px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				position: sticky;
+				top: 0;
+				z-index: 100;
+			}
+
+			.forLogoHeader {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.logo-img {
+				height: 40px;
+			}
+
+			.logoText {
+				font-size: 24px;
+				font-weight: bold;
+				color: #f8774a;
+				text-decoration: none;
+			}
+
+			.header-center {
+				flex-grow: 1;
+				max-width: 600px;
+				margin: 0 20px;
+			}
+
+			.search-ai-container {
+				display: flex;
+				gap: 10px;
+			}
+
+			.search-container {
+				flex-grow: 1;
+				position: relative;
+			}
+
+			.search-input {
+				width: 100%;
+				padding: 10px 15px;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				font-size: 14px;
+				outline: none;
+				transition: border 0.3s;
+			}
+
+			.search-input:focus {
+				border-color: #f8774a;
+			}
+
+			.search-button {
+				position: absolute;
+				right: 10px;
+				top: 50%;
+				transform: translateY(-50%);
+				background: none;
+				border: none;
+				color: #777;
+				cursor: pointer;
+			}
+
+			.ai-search-btn {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				padding: 10px 15px;
+				background-color: #f8774a;
+				color: white;
+				border: none;
+				border-radius: 25px;
+				text-decoration: none;
+				font-size: 14px;
+				transition: background-color 0.3s;
+			}
+
+			.ai-search-btn:hover {
+				background-color: #e0663a;
+			}
+
+			.registration {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				padding: 8px 15px;
+				background-color: transparent;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				color: #555;
+				cursor: pointer;
+				transition: all 0.3s;
+			}
+
+			.registration:hover {
+				background-color: #f5f5f5;
+			}
+
+			main.ai-main {
+				max-width: 1200px;
+				margin: 30px auto;
+				padding: 0 20px;
+			}
+
+			.ai-hero {
+				background-color: #fff;
+				border-radius: 10px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+				padding: 40px;
+				margin-bottom: 30px;
+			}
+
+			.ai-hero h1 {
+				color: #f8774a;
+				font-size: 2.5rem;
+				margin-bottom: 20px;
+			}
+
+			.ai-hero p {
+				font-size: 1.1rem;
+				color: #666;
+				margin-bottom: 30px;
+			}
+
+			.ai-form-container {
+				margin-top: 30px;
+			}
+
+			.ai-input-box {
+				position: relative;
+				margin-bottom: 20px;
+			}
+
+			#ai-query {
+				width: 100%;
+				padding: 15px;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				min-height: 120px;
+				font-size: 16px;
+				resize: vertical;
+				transition: border 0.3s;
+			}
+
+			#ai-query:focus {
+				border-color: #f8774a;
+				outline: none;
+			}
+
+			.ai-submit-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				width: 100%;
+				padding: 12px;
+				background-color: #f8774a;
+				color: white;
+				border: none;
+				border-radius: 8px;
+				font-size: 16px;
+				font-weight: 500;
+				cursor: pointer;
+				transition: background-color 0.3s;
+				margin-top: 10px;
+			}
+
+			.ai-submit-btn:hover {
+				background-color: #e0663a;
+			}
+
+			.ai-submit-btn:disabled {
+				background-color: #cccccc;
+				cursor: not-allowed;
+			}
+
+			.ai-examples {
+				margin: 25px 0;
+			}
+
+			.ai-examples p {
+				color: #666;
+				margin-bottom: 10px;
+				font-size: 14px;
+			}
+
+			.example-buttons {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.example-btn {
+				padding: 8px 15px;
+				background-color: #f0f0f0;
+				border: none;
+				border-radius: 20px;
+				color: #555;
+				font-size: 14px;
+				cursor: pointer;
+				transition: all 0.3s;
+			}
+
+			.example-btn:hover {
+				background-color: #e0e0e0;
+			}
+
+			.ai-recipe-output {
+				margin-top: 30px;
+				padding: 20px;
+				background-color: #f9f9f9;
+				border: 1px solid #eee;
+				border-radius: 8px;
+				min-height: 100px;
+			}
+
+			.loader-spinner {
+				border: 4px solid #f3f3f3;
+				border-top: 4px solid #f8774a;
+				border-radius: 50%;
+				width: 30px;
+				height: 30px;
+				animation: spin 1s linear infinite;
+				margin: 20px auto;
+			}
+
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			.error-message {
+				color: #dc3545;
+				padding: 15px;
+				border: 1px solid #dc3545;
+				border-radius: 5px;
+				margin: 10px 0;
+				background-color: #f8d7da;
+			}
+
+			.recipe-suggestion {
+				background-color: white;
+				border-radius: 8px;
+				padding: 20px;
+				margin-bottom: 20px;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+			}
+
+			.recipe-title {
+				color: #f8774a;
+				margin-top: 0;
+				margin-bottom: 15px;
+			}
+
+			.recipe-ingredients,
+			.recipe-instructions {
+				margin-bottom: 15px;
+			}
+
+			.recipe-subtitle {
+				font-weight: bold;
+				margin-bottom: 10px;
+				color: #555;
+			}
+
+			footer {
+				background-color: #333;
+				color: white;
+				padding: 40px 20px;
+				margin-top: 50px;
+			}
+
+			.backFooter {
+				max-width: 1200px;
+				margin: 0 auto;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.footer-contact {
+				margin-bottom: 30px;
+			}
+
+			.footer-contact h4 {
+				margin-top: 0;
+				margin-bottom: 15px;
+				font-size: 18px;
+			}
+
+			.footer-contact p {
+				margin: 5px 0;
+				color: #ccc;
+			}
+
+			.footer-contact a {
+				color: #f8774a;
+				text-decoration: none;
+			}
+
+			.social-media {
+				display: flex;
+				gap: 15px;
+				margin-top: 15px;
+			}
+
+			.social-link {
+				color: #f8774a !important;
+			}
+
+			.footer-bottom {
+				border-top: 1px solid #555;
+				padding-top: 20px;
+				text-align: center;
+				color: #ccc;
+				font-size: 14px;
+			}
+
+			@media (max-width: 768px) {
+				header {
+					flex-direction: column;
+					gap: 15px;
+					padding: 15px;
+				}
+
+				.header-center {
+					width: 100%;
+					margin: 15px 0;
+				}
+
+				.search-ai-container {
+					flex-direction: column;
+				}
+
+				.ai-hero {
+					padding: 25px;
+				}
+
+				.ai-hero h1 {
+					font-size: 1.8rem;
+				}
+			}
+
+			.recipe-container strong {
+				color: #f8774a;
+				font-size: 1.2em;
+			}
+
+			.recipe-container ul {
+				padding-left: 20px;
+			}
+
+			.recipe-container li {
+				margin-bottom: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="forLogoHeader">
+				<img src="/static/images/robot2 1.svg" alt="Логотип" class="logo-img" />
+				<a href="/" class="logoText"><span>Ricetta</span></a>
+			</div>
+			<div class="header-center">
+				<div class="search-ai-container">
+					<div class="search-container">
+						<input
+							type="text"
+							class="search-input"
+							placeholder="Поиск рецептов..."
+						/>
+						<button class="search-button">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+					<a href="/ai" class="ai-search-btn">
+						<i class="fas fa-robot"></i>
+						С помощью ИИ
+					</a>
+				</div>
+			</div>
+			<button class="registration">
+				<a href="/login" style="color: inherit; text-decoration: none">Войти</a>
+				<i class="fas fa-user-circle"></i>
+			</button>
+		</header>
+
+		<main class="ai-main">
+			<section class="ai-hero">
+				<h1>ИИ-шеф на вашей кухне</h1>
+				<p>
+					Перечислите ингредиенты, которые у вас есть, и наш искусственный
+					интеллект предложит вам вкусные рецепты! Вы также можете указать
+					диетические предпочтения или кухню.
+				</p>
+
+				<section class="ai-form-container">
+					<div class="ai-input-box">
+						<textarea
+							id="ai-query"
+							placeholder="Например: курица, картофель, лук, морковь. Нужно что-то простое на ужин..."
+							rows="4"
+						></textarea>
+						<button class="ai-submit-btn" id="submit-btn" onclick="getRecipe()">
+							<i class="fas fa-magic"></i>
+							Придумать рецепты
+						</button>
+					</div>
+					<div class="ai-examples">
+						<p>Попробуйте примеры:</p>
+						<div class="example-buttons">
+							<button
+								class="example-btn"
+								onclick="setExample('яйца, молоко, мука, сахар. Хочу сделать блинчики')"
+							>
+								Блинчики
+							</button>
+							<button
+								class="example-btn"
+								onclick="setExample('говядина, рис, овощи. Предложите варианты азиатской кухни')"
+							>
+								Азиатская кухня
+							</button>
+							<button
+								class="example-btn"
+								onclick="setExample('творог, ягоды, орехи. Нужен полезный завтрак без сахара')"
+							>
+								Полезный завтрак
+							</button>
+						</div>
+					</div>
+					<div class="ai-recipe-output" id="recipe-output"></div>
+				</section>
+			</section>
+		</main>
+
+		<footer>
+			<div class="backFooter">
+				<div class="footer-contact">
+					<h4>Контакты</h4>
+					<p>
+						Email: <a href="mailto:support@ricetta.com">support@ricetta.com</a>
+					</p>
+					<p>Телефон: +7 (123) 456-7890</p>
+					<div class="social-media">
+						<a href="#" class="social-link">Facebook</a>
+						<a href="#" class="social-link">Instagram</a>
+						<a href="#" class="social-link">Pinterest</a>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p>&copy; 2024 Ricetta. Все права защищены.</p>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			// Обновлённый обработчик ошибок
+			async function getRecipe() {
+				const query = document.getElementById('ai-query').value.trim()
+				const recipeOutput = document.getElementById('recipe-output')
+				const submitBtn = document.getElementById('submit-btn')
+
+				if (!query) {
+					showError('Пожалуйста, введите ингредиенты')
+					return
+				}
+
+				setLoading(true)
+				recipeOutput.innerHTML = '<div class="loader-spinner"></div>'
+
+				try {
+					const response = await fetch('/chat', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ message: query }),
+					})
+
+					const data = await response.json()
+
+					if (!response.ok || data.status === 'error') {
+						throw new Error(data.error || 'Ошибка сервера')
+					}
+
+					recipeOutput.innerHTML = data.response
+				} catch (error) {
+					showError(error.message)
+					console.error('Error:', error)
+				} finally {
+					setLoading(false)
+				}
+			}
+
+			function setLoading(isLoading) {
+				const btn = document.getElementById('submit-btn')
+				btn.disabled = isLoading
+				btn.innerHTML = isLoading
+					? '<i class="fas fa-spinner fa-spin"></i> Готовим рецепты...'
+					: '<i class="fas fa-magic"></i> Придумать рецепты'
+			}
+
+			function showError(message) {
+				const output = document.getElementById('recipe-output')
+				output.innerHTML = `<div class="error-message">${message}</div>`
+			}
+
+			function setExample(text) {
+				document.getElementById('ai-query').value = text
+			}
+
+			// Обработка Enter
+			document
+				.getElementById('ai-query')
+				.addEventListener('keydown', function (e) {
+					if (e.key === 'Enter' && !e.shiftKey) {
+						e.preventDefault()
+						getRecipe()
+					}
+				})
+		</script>
+	</body>
+</html>

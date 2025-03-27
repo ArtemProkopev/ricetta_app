@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Ricetta - Кулинарный помощник</title>
+		<link rel="icon" href="/static/images/robot2 1.svg" type="image/x-icon" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="/static/css/style.css" />
+	</head>
+
+	<body>
+		<header>
+			<div class="forLogoHeader">
+				<img
+					src="/static/images/robotbfona 1.svg"
+					alt="Логотип"
+					class="logo-img"
+				/>
+				<a href="main.html" class="logoText"><span>Ricetta</span></a>
+			</div>
+
+			<div class="header-center">
+				<div class="search-ai-container">
+					<div class="search-container">
+						<input
+							type="text"
+							class="search-input"
+							placeholder="Поиск рецептов..."
+						/>
+						<button class="search-button">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+					<a href="/ai" class="ai-search-btn">
+						<i class="fas fa-robot"></i>
+						С помощью ИИ
+					</a>
+				</div>
+			</div>
+
+			<button class="registration">
+				<a href="/login">Вход</a>
+				<i class="fas fa-user-circle"></i>
+			</button>
+		</header>
+
+		<main>
+			<section class="mainBanner">
+				<div class="dark"></div>
+				<div class="mainBannerTextContent">
+					<p>
+						<b
+							>Подбери рецепт на<br />
+							Новогодний стол<br />
+							вместе с Ricetta
+						</b>
+					</p>
+					<button>Открыть рубрику</button>
+				</div>
+				<img src="/static/images/mainBanner.jpg" />
+			</section>
+
+			<section class="categories">
+				<a class="category" href="categories/breakfast.html">
+					<div class="dark"></div>
+					<p><b>Завтрак</b></p>
+					<img src="/static/images/category1.webp" />
+				</a>
+				<a class="category" href="categories/lunch.html">
+					<div class="dark"></div>
+					<p><b>Обед</b></p>
+					<img src="/static/images/category2.webp" />
+				</a>
+				<a class="category" href="categories/dinner.html">
+					<div class="dark"></div>
+					<p><b>Ужин</b></p>
+					<img src="/static/images/category3.webp" />
+				</a>
+				<a class="category" href="categories/healthyfood.html">
+					<div class="dark"></div>
+					<p><b>Здоровая еда</b></p>
+					<img src="/static/images/category4.webp" />
+				</a>
+				<a class="category" href="categories/snacks.html">
+					<div class="dark"></div>
+					<p><b>Закуски</b></p>
+					<img src="/static/images/category5.webp" />
+				</a>
+				<a class="category" href="categories/desserts.html">
+					<div class="dark"></div>
+					<p><b>Десерты</b></p>
+					<img src="/static/images/category6.webp" />
+				</a>
+			</section>
+
+			<h1 class="recomendationTextTitle">Сейчас в тренде</h1>
+
+			<article class="carousel recomendation">
+				<div class="carousel-track">
+					<section class="recept carousel-image">
+						<div class="mainSectionOfRecept">
+							<div class="imageOfRecept">
+								<div class="timeOfReady">
+									<img
+										src="/static/images/recepts/Time Circle.svg"
+										alt="Time icon"
+									/>
+									<p>15 мин</p>
+								</div>
+								<div class="d1">
+									<img
+										src="/static/images/recepts/Heart2.svg"
+										alt="Heart icon"
+										class="heart-icon"
+									/>
+								</div>
+								<img
+									src="/static/images/recepts/recept1.jpg"
+									alt="Recipe image"
+									class="recipeImage"
+								/>
+							</div>
+							<div class="recipeDescription">
+								<a class="mainTitleDesc" href="codeofrecept/recept1.html"
+									><b>Чай с имбирем и лимоном</b></a
+								>
+								<p class="typeDesc">Завтрак, напитки</p>
+								<div class="rateRec">
+									<img
+										src="/static/images/recepts/009-fire 2.svg"
+										alt="Calories icon"
+									/>
+									<p class="numberCl">41,7 ккал</p>
+								</div>
+								<p class="Desc">
+									Настоящая витаминная бомба, которая<br />
+									поможет в сезон гриппа и простуд
+								</p>
+							</div>
+						</div>
+					</section>
+					<section class="recept carousel-image">
+						<div class="mainSectionOfRecept">
+							<div class="imageOfRecept">
+								<div class="timeOfReady">
+									<img
+										src="/static/images/recepts/Time Circle.svg"
+										alt="Time icon"
+									/>
+									<p>1,1 ч</p>
+								</div>
+								<div class="d1">
+									<img
+										src="/static/images/recepts/Heart2.svg"
+										alt="Heart icon"
+										class="heart-icon"
+									/>
+								</div>
+								<img
+									src="/static/images/recepts/recept2.jpg"
+									alt="Recipe image"
+									class="recipeImage"
+								/>
+							</div>
+							<div class="recipeDescription">
+								<a class="mainTitleDesc" href="codeofrecept/recept2.html"
+									><b>Печенье из гречневой муки</b></a
+								>
+								<p class="typeDesc">Завтрак, десерты</p>
+								<div class="rateRec">
+									<img
+										src="/static/images/recepts/009-fire 2.svg"
+										alt="Calories icon"
+									/>
+									<p class="numberCl">343 ккал</p>
+								</div>
+								<p class="Desc">
+									Сладкое, но не приторное печенье из гречневой муки понравится
+									тем,<br />
+									кто предпочитает безглютеновые десерты
+								</p>
+							</div>
+						</div>
+					</section>
+					<section class="recept carousel-image">
+						<div class="mainSectionOfRecept">
+							<div class="imageOfRecept">
+								<div class="timeOfReady">
+									<img
+										src="/static/images/recepts/Time Circle.svg"
+										alt="Time icon"
+									/>
+									<p>1,2 ч</p>
+								</div>
+								<div class="d1">
+									<img
+										src="/static/images/recepts/Heart2.svg"
+										alt="Heart icon"
+										class="heart-icon"
+									/>
+								</div>
+								<img
+									src="/static/images/recepts/recept3.webp"
+									alt="Recipe image"
+									class="recipeImage"
+								/>
+							</div>
+							<div class="recipeDescription">
+								<a class="mainTitleDesc" href="codeofrecept/recept3.html"
+									><b>Запеченный минтай в горшочках</b></a
+								>
+								<p class="typeDesc">Ужин</p>
+								<div class="rateRec">
+									<img
+										src="/static/images/recepts/009-fire 2.svg"
+										alt="Calories icon"
+									/>
+									<p class="numberCl">41,7 ккал</p>
+								</div>
+								<p class="Desc">
+									Запеките минтай в горшочке, чтобы<br />
+									рыба получилась вкуснее и полезнее.
+								</p>
+							</div>
+						</div>
+					</section>
+					<section class="recept carousel-image">
+						<div class="mainSectionOfRecept">
+							<div class="imageOfRecept">
+								<div class="timeOfReady">
+									<img
+										src="/static/images/recepts/Time Circle.svg"
+										alt="Time icon"
+									/>
+									<p>2,25 ч</p>
+								</div>
+								<div class="d1">
+									<img
+										src="/static/images/recepts/Heart2.svg"
+										alt="Heart icon"
+										class="heart-icon"
+									/>
+								</div>
+								<img
+									src="/static/images/recepts/recept4.webp"
+									alt="Recipe image"
+									class="recipeImage"
+								/>
+							</div>
+							<div class="recipeDescription">
+								<a class="mainTitleDesc" href="codeofrecept/recept4.html"
+									><b>Куриные стрипсы</b></a
+								>
+								<p class="typeDesc">Закуски</p>
+								<div class="rateRec">
+									<img
+										src="/static/images/recepts/009-fire 2.svg"
+										alt="Calories icon"
+									/>
+									<p class="numberCl">362 ккал</p>
+								</div>
+								<p class="Desc">
+									Чтобы приготовить длинные куриные стрипсы<br />
+									в хрустящей золотистой корочке, как в популярной сети
+									фастфуда,<br />
+									вам понадобится не только сама курица, но и панировка.
+								</p>
+							</div>
+						</div>
+					</section>
+					<section class="recept carousel-image">
+						<div class="mainSectionOfRecept">
+							<div class="imageOfRecept">
+								<div class="timeOfReady">
+									<img
+										src="/static/images/recepts/Time Circle.svg"
+										alt="Time icon"
+									/>
+									<p>2,3 ч</p>
+								</div>
+								<div class="d1">
+									<img
+										src="/static/images/recepts/Heart2.svg"
+										alt="Heart icon"
+										class="heart-icon"
+									/>
+								</div>
+								<img
+									src="/static/images/recepts/recept5.webp"
+									alt="Recipe image"
+									class="recipeImage"
+								/>
+							</div>
+							<div class="recipeDescription">
+								<a class="mainTitleDesc" href="codeofrecept/recept5.html"
+									><b>Медовый «Наполеон»</b></a
+								>
+								<p class="typeDesc">Десерты</p>
+								<div class="rateRec">
+									<img
+										src="/static/images/recepts/009-fire 2.svg"
+										alt="Calories icon"
+									/>
+									<p class="numberCl">358 ккал</p>
+								</div>
+								<p class="Desc">
+									Коржи в этом торте такие же многослойные и нежные,<br />
+									как в классическом «Наполеоне», а добавление меда<br />
+									в тесто делает выпечку медовой
+								</p>
+							</div>
+						</div>
+					</section>
+				</div>
+				<button class="carousel-button prev">←</button>
+				<button class="carousel-button next">→</button>
+			</article>
+
+			<button class="seeAll"><b>Смотреть все рецепты</b></button>
+
+			<section class="recipe-of-day">
+				<div class="content">
+					<h2>Рецепт дня</h2>
+					<h3>Тыквенный суп-пюре</h3>
+					<div class="stats">
+						<span>🕒 35 мин</span>
+						<span>🔥 240 ккал</span>
+						<span>👍 98%</span>
+					</div>
+					<button>Посмотреть рецепт</button>
+				</div>
+				<div class="image-container">
+					<img src="/static/images/recepts/soup.jpg" alt="Суп" />
+					<div class="floating-ingredients">
+						<span>Тыква</span>
+						<span>Сливки</span>
+						<span>Имбирь</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="newsletter">
+				<h3>🍳 Получайте новые рецепты первыми!</h3>
+				<form class="subscribe-form">
+					<input type="email" placeholder="Ваш email" />
+					<button type="submit">Подписаться</button>
+				</form>
+			</section>
+		</main>
+
+		<footer>
+			<div class="backFooter">
+				<div class="footer-contact">
+					<h4>Контакты</h4>
+					<p>
+						Email: <a href="mailto:support@example.com">support@example.com</a>
+					</p>
+					<p>Телефон: +1 (234) 567-890</p>
+					<div class="social-media">
+						<a href="#" class="social-link">Facebook</a>
+						<a href="#" class="social-link">Instagram</a>
+						<a href="#" class="social-link">Pinterest</a>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p>&copy; 2024 Recetta. Все права защищены.</p>
+				</div>
+			</div>
+		</footer>
+
+		<script src="script.js"></script>
+	</body>
+</html>

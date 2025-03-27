@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
-GEMINI_API_KEY = "AIzaSyBx19-uNQyD5WaZB0mWJ7agoigG0hTGMtQ"
+GEMINI_API_KEY = "AIzaSyBry_e6sHvUPqTu0jmvR9uCa50s1tH6GtM"
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
 
 def get_gemini_response(prompt):

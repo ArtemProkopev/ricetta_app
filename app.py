@@ -17,38 +17,17 @@ def get_gemini_response(prompt):
         }]
     }
     
-    response = requests.post(GEMINI_URL, json=data, headers=headers)
-    if response.status_code == 200:
-        try:
-            return response.json()['candidates'][0]['content']['parts'][0]['text']
-        except (KeyError, IndexError):
-            return None
-    return None
+    try:
+        response = requests.post(GEMINI_URL, json=data, headers=headers, timeout=10)
+        response.raise_for_status()
+        return response.json()['candidates'][0]['content']['parts'][0]['text']
+    except Exception:
+        return None
 
-# Health Check Endpoint (для Render.com)
+# Упрощенный Health Check
 @app.route('/health')
 def health_check():
-    """Эндпоинт для проверки работоспособности сервиса"""
-    try:
-        # Простая проверка подключения к Gemini API
-        test_prompt = "Test connection"
-        test_response = get_gemini_response(test_prompt)
-        
-        if test_response is None:
-            raise ConnectionError("Gemini API недоступен")
-            
-        return jsonify({
-            "status": "healthy",
-            "services": {
-                "gemini_api": "available" if test_response else "unavailable"
-            }
-        }), 200
-        
-    except Exception as e:
-        return jsonify({
-            "status": "unhealthy",
-            "error": str(e)
-        }), 500
+    return jsonify({"status": "healthy"}), 200
 
 @app.route('/')
 def home():
@@ -62,7 +41,6 @@ def ai_page():
 def chat():
     try:
         user_input = request.json.get('message', '').strip()
-        
         if not user_input:
             return jsonify({'error': 'Пожалуйста, введите ингредиенты'}), 400
             
@@ -76,7 +54,6 @@ def chat():
         5. Совет"""
         
         response = get_gemini_response(prompt)
-        
         if not response:
             raise ValueError("Не удалось получить ответ от Gemini API")
             
@@ -84,13 +61,13 @@ def chat():
             'response': response.replace("\n", "<br>"),
             'status': 'success'
         })
-
     except Exception as e:
         return jsonify({
             'error': f'Ошибка: {str(e)}',
             'status': 'error'
         }), 500
 
+# Статические роуты
 @app.route('/categories/<category_name>.html')
 def show_category(category_name):
     return send_from_directory(os.path.join(app.root_path, 'categories'), 
@@ -113,4 +90,5 @@ def login_page():
     return send_from_directory('ricetta-project-end', 'login.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000, debug=True)
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)

@@ -10,20 +10,30 @@
 	<body>
 		<header>
 			<div class="forLogoHeader">
-				<img src="/static/images/robotbfona%201.svg" alt="Логотип" />
-				<a href="/"><b>Ricetta</b></a>
+				<img src="/static/images/robot2 1.svg" alt="Логотип" class="logo-img" />
+				<a href="/" class="logoText"><span>Ricetta</span></a>
 			</div>
-			<div class="allSearch">
-				<div class="search-container">
-					<input type="text" class="search-input" placeholder="Поиск..." />
-					<button class="search-button">
-						<img src="/static/images/search.svg" alt="Поиск" />
-					</button>
+			<div class="header-center">
+				<div class="search-ai-container">
+					<div class="search-container">
+						<input
+							type="text"
+							class="search-input"
+							placeholder="Поиск рецептов..."
+						/>
+						<button class="search-button">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+					<a href="/ai" class="ai-search-btn">
+						<i class="fas fa-robot"></i>
+						С помощью ИИ
+					</a>
 				</div>
 			</div>
 			<button class="registration">
-				<a href="/register">Войти</a>
-				<img src="/static/images/UserCircle.svg" alt="Пользователь" />
+				<a href="/login" style="color: inherit; text-decoration: none">Войти</a>
+				<i class="fas fa-user-circle"></i>
 			</button>
 		</header>
 

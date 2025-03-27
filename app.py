@@ -27,7 +27,7 @@ def get_gemini_response(prompt):
     try:
         # Увеличен таймаут и добавлена обработка SSL
         response = requests.post(
-            GEMINI_API_URL,
+            GEMINI_API_KEY,
             json=data,
             headers=headers,
             timeout=30,

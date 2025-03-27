@@ -113,4 +113,4 @@ def login_page():
     return send_from_directory('ricetta-project-end', 'login.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=10000, debug=True)

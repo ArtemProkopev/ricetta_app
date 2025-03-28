@@ -2,6 +2,9 @@ import os
 import requests
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
+from markdownify import markdownify as md
+import markdown
+import re
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
@@ -24,7 +27,6 @@ def get_gemini_response(prompt):
     except Exception:
         return None
 
-# Упрощенный Health Check
 @app.route('/health')
 def health_check():
     return jsonify({"status": "healthy"}), 200
@@ -45,20 +47,61 @@ def chat():
             return jsonify({'error': 'Пожалуйста, введите ингредиенты'}), 400
             
         prompt = f"""Создай 2 рецепта используя: {user_input}. Формат для каждого:
-        1. Название блюда
-        2. Ингредиенты:
-           - Есть: [список]
-           - Купить: [список]
-        3. Рецепт: пошагово
-        4. Время приготовления
-        5. Совет"""
+        ---
+        ### **Рецепт 1**
+        #### **Название блюда**
+        [название]
+        
+        #### **Ингредиенты**
+        - Есть: [список]
+        - Купить: [список]
+        
+        #### **Пошаговый рецепт**
+        1. [шаг 1]
+        2. [шаг 2]
+        3. [шаг 3]
+        
+        #### **Время приготовления**
+        [время]
+        
+        #### **Совет**
+        *Совет по приготовлению*
+        
+        ---
+        ### **Рецепт 2**
+        #### **Название блюда**
+        [название]
+        
+        #### **Ингредиенты**
+        - Есть: [список]
+        - Купить: [список]
+        
+        #### **Пошаговый рецепт**
+        1. [шаг 1]
+        2. [шаг 2]
+        3. [шаг 3]
+        
+        #### **Время приготовления**
+        [время]
+        
+        #### **Совет**
+        *Совет по приготовлению*
+        ---
+        """
         
         response = get_gemini_response(prompt)
         if not response:
             raise ValueError("Не удалось получить ответ от Gemini API")
-            
+        
+        cleaned_response = re.sub(r'\*\*', '', response) 
+        cleaned_response = re.sub(r'__|\*\*|\*\*__', '', cleaned_response)
+        
+        markdown_response = md(cleaned_response.replace("\n", "<br>"))
+        
+        html_response = markdown.markdown(markdown_response)
+        
         return jsonify({
-            'response': response.replace("\n", "<br>"),
+            'response': html_response,
             'status': 'success'
         })
     except Exception as e:
@@ -67,7 +110,6 @@ def chat():
             'status': 'error'
         }), 500
 
-# Статические роуты
 @app.route('/categories/<category_name>.html')
 def show_category(category_name):
     return send_from_directory(os.path.join(app.root_path, 'categories'), 

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Ricetta - Кулинарный помощник</title>
+		<title>Ricetta - ИИ Поиск рецептов</title>
 		<link rel="icon" href="/static/images/robot2 1.svg" type="image/x-icon" />
 		<link
 			rel="stylesheet"
@@ -274,6 +274,16 @@
 				background-color: #f8d7da;
 			}
 
+			.continue-btn {
+				background: #f8774a;
+				color: white;
+				border: none;
+				padding: 8px 15px;
+				border-radius: 5px;
+				cursor: pointer;
+				margin-top: 10px;
+			}
+
 			.recipe-suggestion {
 				background-color: white;
 				border-radius: 8px;
@@ -408,7 +418,7 @@
 							<i class="fas fa-search"></i>
 						</button>
 					</div>
-					<a href="templates/ai-search.html" class="ai-search-btn">
+					<a href="/ai" class="ai-search-btn">
 						<i class="fas fa-robot"></i>
 						С помощью ИИ
 					</a>
@@ -490,7 +500,6 @@
 		</footer>
 
 		<script>
-			// Обновлённый обработчик ошибок
 			async function getRecipe() {
 				const query = document.getElementById('ai-query').value.trim()
 				const recipeOutput = document.getElementById('recipe-output')
@@ -516,16 +525,70 @@
 					const data = await response.json()
 
 					if (!response.ok || data.status === 'error') {
-						throw new Error(data.error || 'Ошибка сервера')
+						showErrorWithContinue(data.error || 'Ошибка сервера', query)
+						return
 					}
 
 					recipeOutput.innerHTML = data.response
 				} catch (error) {
-					showError(error.message)
+					showErrorWithContinue(error.message, query)
 					console.error('Error:', error)
 				} finally {
 					setLoading(false)
 				}
+			}
+
+			function forceContinue(query) {
+				const recipeOutput = document.getElementById('recipe-output')
+				const submitBtn = document.getElementById('submit-btn')
+
+				setLoading(true)
+				recipeOutput.innerHTML = '<div class="loader-spinner"></div>'
+
+				fetch('/chat', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						message: query,
+						force: true,
+					}),
+				})
+					.then(response => response.json())
+					.then(data => {
+						if (data.status === 'error') {
+							throw new Error(data.error)
+						}
+						recipeOutput.innerHTML = data.response
+					})
+					.catch(error => {
+						showError(error.message)
+					})
+					.finally(() => {
+						setLoading(false)
+					})
+			}
+
+			function showErrorWithContinue(message, originalQuery) {
+				const output = document.getElementById('recipe-output')
+				const escapedQuery = originalQuery.replace(/'/g, "\\'")
+				output.innerHTML = `
+                <div class="error-message">
+                    ${message}
+                    <div style="margin-top: 15px;">
+                        <button onclick="forceContinue('${escapedQuery}')" 
+                                class="continue-btn">
+                            Все равно продолжить
+                        </button>
+                    </div>
+                </div>
+            `
+			}
+
+			function showError(message) {
+				const output = document.getElementById('recipe-output')
+				output.innerHTML = `<div class="error-message">${message}</div>`
 			}
 
 			function setLoading(isLoading) {
@@ -534,11 +597,6 @@
 				btn.innerHTML = isLoading
 					? '<i class="fas fa-spinner fa-spin"></i> Готовим рецепты...'
 					: '<i class="fas fa-magic"></i> Придумать рецепты'
-			}
-
-			function showError(message) {
-				const output = document.getElementById('recipe-output')
-				output.innerHTML = `<div class="error-message">${message}</div>`
 			}
 
 			function setExample(text) {

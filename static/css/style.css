@@ -842,30 +842,88 @@ button:hover {
 	}
 }
 
-/* .loader-spinner {
-		border: 4px solid #f3f3f3;
-		border-top: 4px solid #3498db;
-		border-radius: 50%;
-		width: 30px;
-		height: 30px;
-		animation: spin 1s linear infinite;
-		margin: 20px auto;
-}
-
-@keyframes spin {
-		0% {
-				transform: rotate(0deg);
-		}
-
-		100% {
-				transform: rotate(360deg);
-		}
-}
-
+/* Стили для сообщений об ошибках */
 .error-message {
-		color: #dc3545;
-		padding: 15px;
-		border: 1px solid #dc3545;
-		border-radius: 5px;
-		margin: 10px 0;
-} */
+	background-color: #fff8f8;
+	border-left: 4px solid #ff6b6b;
+	padding: 1.5rem;
+	margin: 1rem 0;
+	border-radius: 4px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.error-message h2 {
+	color: #ff6b6b;
+	margin-top: 0;
+	font-size: 1.4rem;
+}
+
+.error-message h3 {
+	color: #ff8e8e;
+	margin: 1rem 0 0.5rem 0;
+	font-size: 1.2rem;
+}
+
+.error-message ul {
+	padding-left: 1.5rem;
+}
+
+.error-message li {
+	margin-bottom: 0.5rem;
+}
+
+/* Стили для рецептов */
+.recipe-container {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+}
+
+.recipe-header {
+	color: #f8774a;
+	border-bottom: 2px solid #f8774a;
+	padding-bottom: 0.3rem;
+	margin: 1.5rem 0 1rem 0;
+}
+
+.recipe-subheader {
+	color: #f8774a;
+	margin: 1.3rem 0 0.8rem 0;
+	font-size: 1.2rem;
+}
+
+.recipe-list {
+	padding-left: 1.5rem;
+	margin: 0.8rem 0;
+}
+
+.recipe-steps {
+	padding-left: 1.8rem;
+	margin: 1rem 0;
+}
+
+.recipe-steps li {
+	margin-bottom: 0.7rem;
+}
+
+.recipe-container strong {
+	color: #f8774a;
+	font-weight: 600;
+}
+
+.recipe-container em {
+	font-style: italic;
+	color: #666;
+}
+
+/* Иконки для времени и советов */
+.recipe-container p:has(⏱) {
+	margin: 0.8rem 0;
+	font-weight: 500;
+}
+
+.recipe-container p:has(💡) {
+	background-color: #f8f4e5;
+	padding: 0.8rem;
+	border-radius: 6px;
+	border-left: 3px solid #f8d56b;
+}

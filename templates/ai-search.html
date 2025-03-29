@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,24 +7,57 @@
 		<link rel="icon" href="/static/images/robot2 1.svg" type="image/x-icon" />
 		<link
 			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 		/>
 		<style>
+			:root {
+				--primary: #ff6b35;
+				--primary-light: #ff8c5a;
+				--primary-dark: #e05a2b;
+				--secondary: #4ecdc4;
+				--dark: #292f36;
+				--light: #ffffff;
+				--gray: #6c757d;
+				--gray-light: #e9ecef;
+				--bg: #f8f9fa;
+				--card: #ffffff;
+				--text: #333333;
+				--text-light: #6c757d;
+				--footer-bg: #ffffff;
+				--footer-text: #333333;
+			}
+
+			[data-theme='dark'] {
+				--bg: #121212;
+				--card: #1e1e1e;
+				--text: #f5f5f5;
+				--text-light: #b0b0b0;
+				--gray-light: #2d2d2d;
+				--footer-bg: #1e1e1e;
+				--footer-text: #f5f5f5;
+			}
+
 			* {
 				box-sizing: border-box;
-				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				margin: 0;
+				padding: 0;
 			}
 
 			body {
-				margin: 0;
-				padding: 0;
-				background-color: #f5f5f5;
-				color: #333;
+				font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+					Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+				background-color: var(--bg);
+				color: var(--text);
 				line-height: 1.6;
 			}
 
+			/* Шапка */
 			header {
-				background-color: #fff;
+				background-color: var(--card);
 				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 				padding: 15px 20px;
 				display: flex;
@@ -48,7 +81,7 @@
 			.logoText {
 				font-size: 24px;
 				font-weight: bold;
-				color: #f8774a;
+				color: var(--primary);
 				text-decoration: none;
 			}
 
@@ -71,15 +104,16 @@
 			.search-input {
 				width: 100%;
 				padding: 10px 15px;
-				border: 1px solid #ddd;
+				border: 1px solid var(--gray-light);
 				border-radius: 25px;
 				font-size: 14px;
 				outline: none;
-				transition: border 0.3s;
+				background-color: var(--card);
+				color: var(--text);
 			}
 
 			.search-input:focus {
-				border-color: #f8774a;
+				border-color: var(--primary);
 			}
 
 			.search-button {
@@ -89,7 +123,7 @@
 				transform: translateY(-50%);
 				background: none;
 				border: none;
-				color: #777;
+				color: var(--gray);
 				cursor: pointer;
 			}
 
@@ -98,7 +132,7 @@
 				align-items: center;
 				gap: 5px;
 				padding: 10px 15px;
-				background-color: #f8774a;
+				background-color: var(--primary);
 				color: white;
 				border: none;
 				border-radius: 25px;
@@ -108,7 +142,21 @@
 			}
 
 			.ai-search-btn:hover {
-				background-color: #e0663a;
+				background-color: var(--primary-dark);
+			}
+
+			.header-actions {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.theme-toggle {
+				background: none;
+				border: none;
+				color: var(--gray);
+				cursor: pointer;
+				font-size: 20px;
 			}
 
 			.registration {
@@ -117,17 +165,14 @@
 				gap: 5px;
 				padding: 8px 15px;
 				background-color: transparent;
-				border: 1px solid #ddd;
+				border: 1px solid var(--gray-light);
 				border-radius: 25px;
-				color: #555;
+				color: var(--text);
 				cursor: pointer;
-				transition: all 0.3s;
+				text-decoration: none;
 			}
 
-			.registration:hover {
-				background-color: #f5f5f5;
-			}
-
+			/* Основное содержимое */
 			main.ai-main {
 				max-width: 1200px;
 				margin: 30px auto;
@@ -135,7 +180,7 @@
 			}
 
 			.ai-hero {
-				background-color: #fff;
+				background-color: var(--card);
 				border-radius: 10px;
 				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 				padding: 40px;
@@ -143,17 +188,18 @@
 			}
 
 			.ai-hero h1 {
-				color: #f8774a;
+				color: var(--primary);
 				font-size: 2.5rem;
 				margin-bottom: 20px;
 			}
 
 			.ai-hero p {
 				font-size: 1.1rem;
-				color: #666;
+				color: var(--text-light);
 				margin-bottom: 30px;
 			}
 
+			/* Форма */
 			.ai-form-container {
 				margin-top: 30px;
 			}
@@ -166,16 +212,17 @@
 			#ai-query {
 				width: 100%;
 				padding: 15px;
-				border: 1px solid #ddd;
+				border: 1px solid var(--gray-light);
 				border-radius: 8px;
 				min-height: 120px;
 				font-size: 16px;
 				resize: vertical;
-				transition: border 0.3s;
+				background-color: var(--card);
+				color: var(--text);
 			}
 
 			#ai-query:focus {
-				border-color: #f8774a;
+				border-color: var(--primary);
 				outline: none;
 			}
 
@@ -186,32 +233,33 @@
 				gap: 8px;
 				width: 100%;
 				padding: 12px;
-				background-color: #f8774a;
+				background-color: var(--primary);
 				color: white;
 				border: none;
 				border-radius: 8px;
 				font-size: 16px;
 				font-weight: 500;
 				cursor: pointer;
-				transition: background-color 0.3s;
+				transition: all 0.3s;
 				margin-top: 10px;
 			}
 
 			.ai-submit-btn:hover {
-				background-color: #e0663a;
+				background-color: var(--primary-dark);
 			}
 
 			.ai-submit-btn:disabled {
-				background-color: #cccccc;
+				background-color: var(--gray-light);
 				cursor: not-allowed;
 			}
 
+			/* Примеры */
 			.ai-examples {
 				margin: 25px 0;
 			}
 
 			.ai-examples p {
-				color: #666;
+				color: var(--text-light);
 				margin-bottom: 10px;
 				font-size: 14px;
 			}
@@ -224,31 +272,34 @@
 
 			.example-btn {
 				padding: 8px 15px;
-				background-color: #f0f0f0;
+				background-color: var(--gray-light);
 				border: none;
 				border-radius: 20px;
-				color: #555;
+				color: var(--text);
 				font-size: 14px;
 				cursor: pointer;
 				transition: all 0.3s;
 			}
 
 			.example-btn:hover {
-				background-color: #e0e0e0;
+				background-color: var(--primary);
+				color: white;
 			}
 
+			/* Результат */
 			.ai-recipe-output {
 				margin-top: 30px;
 				padding: 20px;
-				background-color: #f9f9f9;
-				border: 1px solid #eee;
+				background-color: var(--card);
 				border-radius: 8px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 				min-height: 100px;
+				color: var(--text);
 			}
 
 			.loader-spinner {
-				border: 4px solid #f3f3f3;
-				border-top: 4px solid #f8774a;
+				border: 4px solid var(--gray-light);
+				border-top: 4px solid var(--primary);
 				border-radius: 50%;
 				width: 30px;
 				height: 30px;
@@ -265,55 +316,117 @@
 				}
 			}
 
-			.error-message {
-				color: #dc3545;
-				padding: 15px;
-				border: 1px solid #dc3545;
-				border-radius: 5px;
-				margin: 10px 0;
-				background-color: #f8d7da;
-			}
-
-			.continue-btn {
-				background: #f8774a;
-				color: white;
-				border: none;
-				padding: 8px 15px;
-				border-radius: 5px;
-				cursor: pointer;
-				margin-top: 10px;
-			}
-
-			.recipe-suggestion {
-				background-color: white;
-				border-radius: 8px;
-				padding: 20px;
-				margin-bottom: 20px;
-				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+			/* Стили для рецептов */
+			.recipe-container {
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				line-height: 1.7;
+				color: var(--text);
 			}
 
 			.recipe-title {
-				color: #f8774a;
-				margin-top: 0;
-				margin-bottom: 15px;
-			}
-
-			.recipe-ingredients,
-			.recipe-instructions {
-				margin-bottom: 15px;
+				color: var(--primary);
+				font-size: 1.8rem;
+				margin: 1.5rem 0 1rem;
+				padding-bottom: 0.5rem;
+				border-bottom: 2px solid var(--primary);
+				font-weight: 600;
 			}
 
 			.recipe-subtitle {
-				font-weight: bold;
-				margin-bottom: 10px;
-				color: #555;
+				color: var(--primary);
+				font-size: 1.4rem;
+				margin: 1.3rem 0 0.8rem;
+				font-weight: 500;
 			}
 
+			.recipe-ingredient-list {
+				padding-left: 1.5rem;
+				margin: 0.8rem 0;
+				list-style-type: none;
+			}
+
+			.recipe-ingredient {
+				margin-bottom: 0.5rem;
+				position: relative;
+				padding-left: 1.5rem;
+				color: var(--text);
+			}
+
+			.recipe-ingredient:before {
+				content: '•';
+				color: var(--primary);
+				position: absolute;
+				left: 0;
+				font-weight: bold;
+			}
+
+			.recipe-steps {
+				padding-left: 1.8rem;
+				margin: 1rem 0;
+				list-style-type: none;
+				counter-reset: step-counter;
+			}
+
+			.recipe-step {
+				counter-increment: step-counter;
+				margin-bottom: 0.8rem;
+				position: relative;
+				padding-left: 2rem;
+				color: var(--text);
+			}
+
+			.recipe-step:before {
+				content: counter(step-counter);
+				color: var(--primary);
+				font-weight: bold;
+				position: absolute;
+				left: 0;
+			}
+
+			/* Красивое оформление времени и советов */
+			.recipe-time {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				margin: 1.5rem 0;
+				padding: 12px;
+				background-color: rgba(255, 107, 53, 0.1);
+				border-radius: 8px;
+				color: var(--text);
+				font-size: 1rem;
+			}
+
+			.recipe-time i {
+				color: var(--primary);
+				font-size: 1.2rem;
+			}
+
+			.recipe-tip {
+				margin: 1.5rem 0;
+				padding: 12px 16px;
+				background-color: rgba(255, 107, 53, 0.1);
+				border-radius: 8px;
+				border-left: 4px solid var(--primary);
+				color: var(--text);
+				font-style: italic;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.recipe-tip i {
+				color: var(--primary);
+				font-size: 1.2rem;
+				font-style: normal;
+			}
+
+			/* Подвал */
 			footer {
-				background-color: #333;
-				color: white;
+				background-color: var(--card);
+				color: var(--text);
 				padding: 40px 20px;
 				margin-top: 50px;
+				box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 			}
 
 			.backFooter {
@@ -335,11 +448,11 @@
 
 			.footer-contact p {
 				margin: 5px 0;
-				color: #ccc;
+				color: var(--text-light);
 			}
 
 			.footer-contact a {
-				color: #f8774a;
+				color: var(--primary);
 				text-decoration: none;
 			}
 
@@ -350,14 +463,14 @@
 			}
 
 			.social-link {
-				color: #f8774a !important;
+				color: var(--primary) !important;
 			}
 
 			.footer-bottom {
-				border-top: 1px solid #555;
+				border-top: 1px solid var(--gray-light);
 				padding-top: 20px;
 				text-align: center;
-				color: #ccc;
+				color: var(--text-light);
 				font-size: 14px;
 			}
 
@@ -386,17 +499,162 @@
 				}
 			}
 
-			.recipe-container strong {
-				color: #f8774a;
-				font-size: 1.2em;
+			/* Стили для сообщений об ошибках */
+			.error-message {
+				background: linear-gradient(
+					145deg,
+					rgba(255, 107, 53, 0.08) 0%,
+					rgba(255, 107, 53, 0.15) 100%
+				);
+				border-left: 4px solid var(--primary);
+				padding: 25px;
+				margin: 30px 0;
+				border-radius: 16px;
+				display: flex;
+				align-items: flex-start;
+				gap: 20px;
+				animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+				box-shadow: 0 8px 32px rgba(255, 107, 53, 0.12);
+				position: relative;
+				overflow: hidden;
+				backdrop-filter: blur(4px);
 			}
 
-			.recipe-container ul {
-				padding-left: 20px;
+			.error-message::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 4px;
+				background: linear-gradient(
+					90deg,
+					var(--primary),
+					var(--primary-light)
+				);
+				animation: progress 3s ease-in-out infinite;
 			}
 
-			.recipe-container li {
-				margin-bottom: 8px;
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes progress {
+				0% {
+					width: 0;
+					opacity: 0.6;
+				}
+				50% {
+					width: 100%;
+					opacity: 1;
+				}
+				100% {
+					width: 0;
+					opacity: 0.6;
+				}
+			}
+
+			.error-icon {
+				color: var(--primary);
+				font-size: 2.2rem;
+				flex-shrink: 0;
+				margin-top: 5px;
+				filter: drop-shadow(0 2px 8px rgba(255, 107, 53, 0.3));
+				animation: pulse 1.5s ease infinite;
+			}
+
+			@keyframes pulse {
+				0% {
+					transform: scale(1);
+					opacity: 1;
+				}
+				50% {
+					transform: scale(1.1);
+					opacity: 0.8;
+				}
+				100% {
+					transform: scale(1);
+					opacity: 1;
+				}
+			}
+
+			.error-content {
+				flex: 1;
+			}
+
+			.error-content h2 {
+				color: var(--primary) !important;
+				margin-bottom: 15px !important;
+				font-weight: 700;
+				font-size: 1.6rem;
+				letter-spacing: -0.5px;
+				line-height: 1.3;
+			}
+
+			.error-content h3 {
+				color: var(--primary) !important;
+				margin-bottom: 12px !important;
+				font-weight: 600;
+				font-size: 1.3rem;
+			}
+
+			.error-content p {
+				margin-bottom: 15px !important;
+				color: var(--text);
+				line-height: 1.7;
+				font-size: 1.05rem;
+			}
+
+			.error-content ul,
+			.error-content ol {
+				margin-left: 25px !important;
+				margin-bottom: 20px !important;
+			}
+
+			.error-content li {
+				margin-bottom: 10px !important;
+				position: relative;
+				padding-left: 15px;
+				line-height: 1.6;
+			}
+
+			.error-content li::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 12px;
+				width: 6px;
+				height: 6px;
+				background-color: var(--primary);
+				border-radius: 50%;
+				box-shadow: 0 0 8px var(--primary);
+			}
+
+			/* Адаптивность */
+			@media (max-width: 768px) {
+				.error-message {
+					flex-direction: column;
+					gap: 15px;
+					padding: 20px;
+					margin: 20px 0;
+				}
+
+				.error-icon {
+					align-self: center;
+					font-size: 2rem;
+				}
+
+				.error-content h2 {
+					font-size: 1.4rem;
+					text-align: center;
+				}
 			}
 		</style>
 	</head>
@@ -404,7 +662,7 @@
 		<header>
 			<div class="forLogoHeader">
 				<img src="/static/images/robot2 1.svg" alt="Логотип" class="logo-img" />
-				<a href="/" class="logoText"><span>Ricetta</span></a>
+				<a href="/" class="logoText">Ricetta</a>
 			</div>
 			<div class="header-center">
 				<div class="search-ai-container">
@@ -424,10 +682,15 @@
 					</a>
 				</div>
 			</div>
-			<button class="registration">
-				<a href="/login" style="color: inherit; text-decoration: none">Войти</a>
-				<i class="fas fa-user-circle"></i>
-			</button>
+			<div class="header-actions">
+				<button class="theme-toggle" id="theme-toggle">
+					<i class="fas fa-moon"></i>
+				</button>
+				<a href="/login" class="registration">
+					Войти
+					<i class="fas fa-user-circle"></i>
+				</a>
+			</div>
 		</header>
 
 		<main class="ai-main">
@@ -494,12 +757,35 @@
 					</div>
 				</div>
 				<div class="footer-bottom">
-					<p>&copy; 2024 Ricetta. Все права защищены.</p>
+					<p>&copy; 2025 Ricetta. Все права защищены.</p>
 				</div>
 			</div>
 		</footer>
 
 		<script>
+			// Переключение темы
+			const themeToggle = document.getElementById('theme-toggle')
+			const html = document.documentElement
+
+			// Проверяем сохраненную тему
+			const savedTheme = localStorage.getItem('theme') || 'light'
+			html.setAttribute('data-theme', savedTheme)
+			updateThemeIcon(savedTheme)
+
+			themeToggle.addEventListener('click', () => {
+				const currentTheme = html.getAttribute('data-theme')
+				const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+				html.setAttribute('data-theme', newTheme)
+				localStorage.setItem('theme', newTheme)
+				updateThemeIcon(newTheme)
+			})
+
+			function updateThemeIcon(theme) {
+				const icon = themeToggle.querySelector('i')
+				icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'
+			}
+
+			// Генерация рецепта
 			async function getRecipe() {
 				const query = document.getElementById('ai-query').value.trim()
 				const recipeOutput = document.getElementById('recipe-output')
@@ -529,13 +815,69 @@
 						return
 					}
 
-					recipeOutput.innerHTML = data.response
+					// Форматируем вывод рецепта
+					let formattedResponse = formatRecipeOutput(data.response)
+					recipeOutput.innerHTML = formattedResponse
+					recipeOutput.scrollIntoView({ behavior: 'smooth' })
 				} catch (error) {
-					showErrorWithContinue(error.message, query)
+					showErrorWithContinue(error.message || 'Произошла ошибка', query)
 					console.error('Error:', error)
 				} finally {
 					setLoading(false)
 				}
+			}
+
+			function formatRecipeOutput(text) {
+				// Создаем контейнер с принудительным наследованием цветов темы
+				let result = `
+						<div class="recipe-container" style="color: inherit;">
+								${text}
+						</div>
+				`
+
+				// Обрабатываем время приготовления
+				result = result.replace(
+					/<p>Время приготовления:(.*?)<\/p>/gi,
+					'<div class="recipe-time"><i class="fas fa-clock"></i><span>Время приготовления:$1</span></div>'
+				)
+
+				// Обрабатываем советы
+				result = result.replace(
+					/<p>(Совет:[^<]*?)<\/p>/gi,
+					'<div class="recipe-tip">$1</div>'
+				)
+
+				// Добавляем обработку заголовков
+				result = result.replace(
+					/<h2>(.*?)<\/h2>/gi,
+					'<h2 class="recipe-title">$1</h2>'
+				)
+				result = result.replace(
+					/<h3>(.*?)<\/h3>/gi,
+					'<h3 class="recipe-subtitle">$1</h3>'
+				)
+
+				// Обрабатываем списки ингредиентов
+				result = result.replace(
+					/<ul>(.*?)<\/ul>/gis,
+					'<ul class="recipe-ingredient-list">$1</ul>'
+				)
+				result = result.replace(
+					/<li>(.*?)<\/li>/gi,
+					'<li class="recipe-ingredient">$1</li>'
+				)
+
+				// Обрабатываем шаги приготовления
+				result = result.replace(
+					/<ol>(.*?)<\/ol>/gis,
+					'<ol class="recipe-steps">$1</ol>'
+				)
+				result = result.replace(
+					/<li>(.*?)<\/li>/gi,
+					'<li class="recipe-step">$1</li>'
+				)
+
+				return result
 			}
 
 			function forceContinue(query) {
@@ -560,7 +902,11 @@
 						if (data.status === 'error') {
 							throw new Error(data.error)
 						}
-						recipeOutput.innerHTML = data.response
+
+						// Форматируем вывод рецепта
+						let formattedResponse = formatRecipeOutput(data.response)
+						recipeOutput.innerHTML = formattedResponse
+						recipeOutput.scrollIntoView({ behavior: 'smooth' })
 					})
 					.catch(error => {
 						showError(error.message)
@@ -572,23 +918,32 @@
 
 			function showErrorWithContinue(message, originalQuery) {
 				const output = document.getElementById('recipe-output')
-				const escapedQuery = originalQuery.replace(/'/g, "\\'")
 				output.innerHTML = `
-                <div class="error-message">
-                    ${message}
-                    <div style="margin-top: 15px;">
-                        <button onclick="forceContinue('${escapedQuery}')" 
-                                class="continue-btn">
-                            Все равно продолжить
-                        </button>
-                    </div>
-                </div>
-            `
+						<div class="error-message">
+								<div class="error-icon">
+										<i class="fas fa-exclamation-triangle"></i>
+								</div>
+								<div class="error-content">
+										${message}
+								</div>
+						</div>
+				`
+				output.scrollIntoView({ behavior: 'smooth', block: 'center' })
 			}
 
 			function showError(message) {
 				const output = document.getElementById('recipe-output')
-				output.innerHTML = `<div class="error-message">${message}</div>`
+				output.innerHTML = `
+						<div class="error-message">
+								<div class="error-icon">
+										<i class="fas fa-exclamation-circle"></i>
+								</div>
+								<div class="error-content">
+										${message}
+								</div>
+						</div>
+				`
+				output.scrollIntoView({ behavior: 'smooth', block: 'center' })
 			}
 
 			function setLoading(isLoading) {
@@ -601,6 +956,7 @@
 
 			function setExample(text) {
 				document.getElementById('ai-query').value = text
+				document.getElementById('ai-query').focus()
 			}
 
 			// Обработка Enter

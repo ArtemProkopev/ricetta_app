@@ -392,6 +392,20 @@ def home():
 def ai_page():
     return render_template('ai-search.html')
 
+@app.route('/categories/<category_name>.html')
+def show_category(category_name):
+    return send_from_directory(
+        os.path.join(app.root_path, 'categories'),
+        f'{category_name}.html'
+    )
+
+@app.route('/recept/<int:recept_id>')
+def show_recept(recept_id):
+    return send_from_directory(
+        os.path.join(app.root_path, 'codeofrecept'),
+        f'recept{recept_id}.html'
+    )
+
 @app.route('/chat', methods=['POST'])
 @limiter.limit("5 per minute")
 def chat():

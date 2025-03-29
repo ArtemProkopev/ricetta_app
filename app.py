@@ -5,8 +5,6 @@ import logging
 import time
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
-# from flask_limiter import Limiter
-# from flask_limiter.util import get_remote_address
 from markdownify import markdownify as md
 import markdown
 from typing import List, Tuple, Optional, Dict, Any
@@ -15,13 +13,6 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
-
-# Rate limiting configuration
-# limiter = Limiter(
-#     app=app,
-#     key_func=get_remote_address,
-#     default_limits=["200 per day", "50 per hour", "5 per minute"]
-# )
 
 # Enhanced logging configuration
 logging.basicConfig(
@@ -406,8 +397,31 @@ def show_recept(recept_id):
         f'recept{recept_id}.html'
     )
 
+@app.route('/register')
+def register_page():
+    return send_from_directory('ricetta-project-end', 'register.html')
+
+@app.route('/register/<path:filename>')
+def register_static(filename):
+    return send_from_directory('ricetta-project-end', filename)
+
+@app.route('/login')
+def login_page():
+    return send_from_directory('ricetta-project-end', 'login.html')
+
+@app.route('/password-recovery')
+def password_recovery():
+    return send_from_directory('ricetta-project-end', 'password-recovery.html')
+
+@app.route('/<filename>.css')
+def css_files(filename):
+    return send_from_directory('ricetta-project-end', f'{filename}.css')
+
+@app.route('/images/<path:filename>')
+def images(filename):
+    return send_from_directory(os.path.join('ricetta-project-end', 'images'), filename)
+
 @app.route('/chat', methods=['POST'])
-# @limiter.limit("5 per minute")
 def chat():
     try:
         user_input = sanitize_input(request.json.get('message', '').strip())

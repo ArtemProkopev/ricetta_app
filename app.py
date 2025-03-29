@@ -5,8 +5,8 @@ import logging
 import time
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+# from flask_limiter import Limiter
+# from flask_limiter.util import get_remote_address
 from markdownify import markdownify as md
 import markdown
 from typing import List, Tuple, Optional, Dict, Any
@@ -17,11 +17,11 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
 # Rate limiting configuration
-limiter = Limiter(
-    app=app,
-    key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour", "5 per minute"]
-)
+# limiter = Limiter(
+#     app=app,
+#     key_func=get_remote_address,
+#     default_limits=["200 per day", "50 per hour", "5 per minute"]
+# )
 
 # Enhanced logging configuration
 logging.basicConfig(
@@ -407,7 +407,7 @@ def show_recept(recept_id):
     )
 
 @app.route('/chat', methods=['POST'])
-@limiter.limit("5 per minute")
+# @limiter.limit("5 per minute")
 def chat():
     try:
         user_input = sanitize_input(request.json.get('message', '').strip())
